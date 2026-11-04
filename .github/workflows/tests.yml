@@ -1,0 +1,26 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Unit tests
+        run: python -m unittest discover -v
+      - name: End-to-end demo
+        run: |
+          python -m vulntrack --db ci.db --today 2026-10-01 import samples/zap_report.json --asset demo-shop
+          python -m vulntrack --db ci.db --today 2026-10-01 import samples/nuclei_results.jsonl --asset demo-shop
+          python -m vulntrack --db ci.db --today 2026-10-01 import samples/semgrep.sarif --asset demo-shop
+          python -m vulntrack --db ci.db --today 2026-10-12 import samples/zap_report_rescan.json --asset demo-shop --close-missing
+          python -m vulntrack --db ci.db --today 2026-11-04 report --format html --out report.html
