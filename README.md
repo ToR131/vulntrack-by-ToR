@@ -50,7 +50,7 @@ flowchart LR
 ## Быстрый старт
 
 ```bash
-git clone https://github.com/<ваш-ник>/vulntrack.git
+git clone https://github.com/<ToR131>/vulntrack.git
 cd vulntrack
 python -m vulntrack --help
 ```
