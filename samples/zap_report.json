@@ -1,0 +1,180 @@
+{
+  "@programName": "ZAP",
+  "@version": "2.15.0",
+  "@generated": "Mon, 2 Nov 2026 10:15:42",
+  "site": [
+    {
+      "@name": "https://shop.example.test",
+      "@host": "shop.example.test",
+      "@port": "443",
+      "@ssl": "true",
+      "alerts": [
+        {
+          "pluginid": "40018",
+          "alertRef": "40018",
+          "alert": "SQL Injection",
+          "name": "SQL Injection",
+          "riskcode": "3",
+          "confidence": "2",
+          "riskdesc": "High (Medium)",
+          "desc": "<p>SQL injection may be possible: the response changes when boolean conditions are injected into the parameter.</p>",
+          "instances": [
+            {
+              "uri": "https://shop.example.test/api/products?id=1",
+              "method": "GET",
+              "param": "id",
+              "attack": "1' OR '1'='1' -- ",
+              "evidence": ""
+            }
+          ],
+          "count": "1",
+          "solution": "<p>Do not concatenate user input into SQL statements.</p><p>Use parameterized queries (prepared statements) or an ORM, validate the id as an integer, and run the application under a database account with minimal privileges.</p>",
+          "otherinfo": "<p>The page results were successfully manipulated using the boolean conditions [1' AND '1'='1' -- ] and [1' OR '1'='1' -- ].</p>",
+          "reference": "<p>https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html</p>",
+          "cweid": "89",
+          "wascid": "19",
+          "sourceid": "1"
+        },
+        {
+          "pluginid": "40012",
+          "alertRef": "40012",
+          "alert": "Cross Site Scripting (Reflected)",
+          "name": "Cross Site Scripting (Reflected)",
+          "riskcode": "3",
+          "confidence": "2",
+          "riskdesc": "High (Medium)",
+          "desc": "<p>The search term is reflected into the HTML response without encoding, so a crafted link runs attacker JavaScript in the victim's browser.</p>",
+          "instances": [
+            {
+              "uri": "https://shop.example.test/search?q=test",
+              "method": "GET",
+              "param": "q",
+              "attack": "<script>alert(1);</script>",
+              "evidence": "<script>alert(1);</script>"
+            }
+          ],
+          "count": "1",
+          "solution": "<p>Encode output for the HTML context (use the template engine's auto-escaping), validate input, and add a Content-Security-Policy that forbids inline scripts.</p>",
+          "otherinfo": "",
+          "reference": "<p>https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html</p><p>https://cwe.mitre.org/data/definitions/79.html</p>",
+          "cweid": "79",
+          "wascid": "8",
+          "sourceid": "1"
+        },
+        {
+          "pluginid": "10038",
+          "alertRef": "10038-1",
+          "alert": "Content Security Policy (CSP) Header Not Set",
+          "name": "Content Security Policy (CSP) Header Not Set",
+          "riskcode": "2",
+          "confidence": "3",
+          "riskdesc": "Medium (High)",
+          "desc": "<p>The response has no Content-Security-Policy header, which would limit the impact of XSS and data injection.</p>",
+          "instances": [
+            {"uri": "https://shop.example.test/", "method": "GET", "param": "", "attack": "", "evidence": ""},
+            {"uri": "https://shop.example.test/search?q=test", "method": "GET", "param": "", "attack": "", "evidence": ""}
+          ],
+          "count": "2",
+          "solution": "<p>Configure the web server or application to return a Content-Security-Policy header.</p>",
+          "otherinfo": "",
+          "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP</p>",
+          "cweid": "693",
+          "wascid": "15",
+          "sourceid": "3"
+        },
+        {
+          "pluginid": "10202",
+          "alertRef": "10202",
+          "alert": "Absence of Anti-CSRF Tokens",
+          "name": "Absence of Anti-CSRF Tokens",
+          "riskcode": "2",
+          "confidence": "2",
+          "riskdesc": "Medium (Medium)",
+          "desc": "<p>The profile edit form has no anti-CSRF token, so another site can submit it on behalf of a logged-in user.</p>",
+          "instances": [
+            {
+              "uri": "https://shop.example.test/profile/1024/edit",
+              "method": "GET",
+              "param": "",
+              "attack": "",
+              "evidence": "<form action=\"/profile/1024/edit\" method=\"post\">"
+            }
+          ],
+          "count": "1",
+          "solution": "<p>Add a per-session anti-CSRF token to state-changing forms and set SameSite on the session cookie.</p>",
+          "otherinfo": "",
+          "reference": "<p>https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html</p>",
+          "cweid": "352",
+          "wascid": "9",
+          "sourceid": "3"
+        },
+        {
+          "pluginid": "10054",
+          "alertRef": "10054-1",
+          "alert": "Cookie without SameSite Attribute",
+          "name": "Cookie without SameSite Attribute",
+          "riskcode": "1",
+          "confidence": "2",
+          "riskdesc": "Low (Medium)",
+          "desc": "<p>The session cookie is set without the SameSite attribute and is sent on cross-site requests.</p>",
+          "instances": [
+            {
+              "uri": "https://shop.example.test/login",
+              "method": "POST",
+              "param": "session",
+              "attack": "",
+              "evidence": "Set-Cookie: session"
+            }
+          ],
+          "count": "1",
+          "solution": "<p>Set SameSite=Lax or SameSite=Strict on all cookies.</p>",
+          "otherinfo": "",
+          "reference": "<p>https://owasp.org/www-community/SameSite</p>",
+          "cweid": "1275",
+          "wascid": "13",
+          "sourceid": "3"
+        },
+        {
+          "pluginid": "10036",
+          "alertRef": "10036",
+          "alert": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+          "name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+          "riskcode": "1",
+          "confidence": "3",
+          "riskdesc": "Low (High)",
+          "desc": "<p>The Server header discloses the web server product and version, which helps an attacker pick known exploits.</p>",
+          "instances": [
+            {"uri": "https://shop.example.test/", "method": "GET", "param": "", "attack": "", "evidence": "Apache/2.4.49 (Unix)"}
+          ],
+          "count": "1",
+          "solution": "<p>Configure the server to send a generic Server header (ServerTokens Prod in Apache).</p>",
+          "otherinfo": "",
+          "reference": "<p>https://httpd.apache.org/docs/current/mod/core.html#servertokens</p>",
+          "cweid": "200",
+          "wascid": "13",
+          "sourceid": "3"
+        },
+        {
+          "pluginid": "10021",
+          "alertRef": "10021",
+          "alert": "X-Content-Type-Options Header Missing",
+          "name": "X-Content-Type-Options Header Missing",
+          "riskcode": "1",
+          "confidence": "0",
+          "riskdesc": "Low (False Positive)",
+          "desc": "<p>Marked as a false positive in ZAP: the header is set by the CDN in front of the site.</p>",
+          "instances": [
+            {"uri": "https://shop.example.test/", "method": "GET", "param": "x-content-type-options", "attack": "", "evidence": ""}
+          ],
+          "count": "1",
+          "solution": "<p>Set X-Content-Type-Options: nosniff.</p>",
+          "otherinfo": "",
+          "reference": "",
+          "cweid": "693",
+          "wascid": "15",
+          "sourceid": "3"
+        }
+      ]
+    }
+  ]
+}

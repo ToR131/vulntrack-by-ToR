@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "Semgrep OSS",
+          "semanticVersion": "1.95.0",
+          "rules": [
+            {
+              "id": "python.lang.security.audit.formatted-sql-query.formatted-sql-query",
+              "name": "python.lang.security.audit.formatted-sql-query.formatted-sql-query",
+              "shortDescription": {"text": "SQL query built with string formatting"},
+              "fullDescription": {"text": "Building SQL with f-strings or % formatting lets request data change the query structure."},
+              "help": {"text": "Pass values as query parameters: cursor.execute(\"SELECT * FROM products WHERE id = %s\", (product_id,))."},
+              "helpUri": "https://semgrep.dev/r/python.lang.security.audit.formatted-sql-query.formatted-sql-query",
+              "defaultConfiguration": {"level": "error"},
+              "properties": {
+                "precision": "very-high",
+                "tags": [
+                  "CWE-89: Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+                  "OWASP-A03:2021 - Injection",
+                  "security"
+                ]
+              }
+            },
+            {
+              "id": "python.flask.security.audit.debug-enabled.debug-enabled",
+              "name": "python.flask.security.audit.debug-enabled.debug-enabled",
+              "shortDescription": {"text": "Flask application runs with debug=True"},
+              "fullDescription": {"text": "The Werkzeug debugger allows arbitrary code execution if it is reachable from the network."},
+              "help": {"text": "Read the debug flag from configuration and keep it off outside local development."},
+              "helpUri": "https://semgrep.dev/r/python.flask.security.audit.debug-enabled.debug-enabled",
+              "defaultConfiguration": {"level": "warning"},
+              "properties": {
+                "precision": "high",
+                "tags": ["CWE-489: Active Debug Code", "OWASP-A05:2021 - Security Misconfiguration", "security"]
+              }
+            },
+            {
+              "id": "generic.secrets.gitleaks.generic-api-key.generic-api-key",
+              "name": "generic.secrets.gitleaks.generic-api-key.generic-api-key",
+              "shortDescription": {"text": "Hard-coded API key in source code"},
+              "fullDescription": {"text": "A secret committed to the repository is available to everyone with read access and stays in git history."},
+              "help": {"text": "Move the key to a secrets vault or environment variable and rotate the leaked key."},
+              "helpUri": "https://semgrep.dev/r/generic.secrets.gitleaks.generic-api-key.generic-api-key",
+              "defaultConfiguration": {"level": "error"},
+              "properties": {
+                "precision": "medium",
+                "security-severity": "7.5",
+                "tags": ["CWE-798: Use of Hard-coded Credentials", "OWASP-A07:2021 - Identification and Authentication Failures", "security"]
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "python.lang.security.audit.formatted-sql-query.formatted-sql-query",
+          "ruleIndex": 0,
+          "level": "error",
+          "message": {"text": "SQL statement is built with an f-string from request data, which allows SQL injection."},
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {"uri": "app/db.py", "uriBaseId": "%SRCROOT%"},
+                "region": {
+                  "startLine": 27,
+                  "startColumn": 5,
+                  "endLine": 27,
+                  "endColumn": 71,
+                  "snippet": {"text": "cursor.execute(f\"SELECT * FROM products WHERE id = {product_id}\")"}
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "python.flask.security.audit.debug-enabled.debug-enabled",
+          "ruleIndex": 1,
+          "level": "warning",
+          "message": {"text": "Flask app is started with debug=True."},
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {"uri": "app/main.py", "uriBaseId": "%SRCROOT%"},
+                "region": {"startLine": 58, "snippet": {"text": "app.run(host=\"0.0.0.0\", debug=True)"}}
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "generic.secrets.gitleaks.generic-api-key.generic-api-key",
+          "ruleIndex": 2,
+          "level": "error",
+          "message": {"text": "A payment provider API key is hard-coded in the configuration module."},
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {"uri": "app/config.py", "uriBaseId": "%SRCROOT%"},
+                "region": {"startLine": 12, "snippet": {"text": "PAYMENT_API_KEY = \"sk_demo_************************\""}}
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

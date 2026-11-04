@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Уязвимости: все активы</title><style>
+:root { --bg:#ffffff; --fg:#1d1f23; --muted:#5f6670; --line:#e3e5e8; --card:#f6f7f9; --link:#1f5fa8;
+        --critical:#b3261e; --high:#c2410c; --medium:#8a6a00; --low:#2f6fb3; --info:#6b7280; }
+@media (prefers-color-scheme: dark) {
+  :root { --bg:#16181c; --fg:#e8eaed; --muted:#9aa0a6; --line:#2c3036; --card:#1f2227; --link:#8ab4f8;
+          --critical:#f2766b; --high:#ff9b5e; --medium:#e3c04d; --low:#7fb2ec; --info:#9aa0a6; }
+}
+* { box-sizing: border-box; }
+body { margin: 0 auto; max-width: 1100px; padding: 24px 16px 64px; background: var(--bg); color: var(--fg);
+       font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+h1 { font-size: 24px; margin: 0 0 4px; }
+h2 { font-size: 19px; margin: 36px 0 12px; }
+h3 { font-size: 16px; margin: 0 0 6px; }
+h4 { font-size: 13px; margin: 14px 0 4px; color: var(--muted); text-transform: uppercase; letter-spacing: .03em; }
+a { color: var(--link); }
+.sub { color: var(--muted); margin: 0 0 24px; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; }
+.card b { display: block; font-size: 26px; font-variant-numeric: tabular-nums; }
+.card span { color: var(--muted); font-size: 13px; }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { color: var(--muted); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .03em; }
+td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.sev { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 12px; font-weight: 600;
+       color: var(--bg); white-space: nowrap; }
+.sev-critical { background: var(--critical); } .sev-high { background: var(--high); }
+.sev-medium { background: var(--medium); } .sev-low { background: var(--low); } .sev-info { background: var(--info); }
+.overdue { color: var(--critical); font-weight: 600; }
+code, pre { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 13px; }
+td code { word-break: break-all; }
+pre { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px;
+      white-space: pre-wrap; word-break: break-word; margin: 0; }
+.finding { border-top: 1px solid var(--line); padding-top: 18px; margin-top: 24px; }
+.meta { color: var(--muted); margin: 0 0 10px; }
+dl { display: grid; grid-template-columns: 170px 1fr; gap: 4px 16px; margin: 0; }
+dt { color: var(--muted); } dd { margin: 0; word-break: break-word; }
+ul { margin: 0; padding-left: 20px; }
+@media (max-width: 640px) { dl { grid-template-columns: 1fr; } dd { margin-bottom: 6px; } }
+</style></head><body>
+<h1>Отчёт по уязвимостям: все активы</h1>
+<p class="sub">Сформирован 2026-11-04 · активных находок: 9</p>
+<section class="cards"><div class="card"><b>0</b><span>Открыто: критическая</span></div><div class="card"><b>4</b><span>Открыто: высокая</span></div><div class="card"><b>5</b><span>Открыто: средняя</span></div><div class="card"><b>0</b><span>Открыто: низкая</span></div><div class="card"><b>4</b><span>Просрочено по SLA</span></div><div class="card"><b>2</b><span>Устранено</span></div><div class="card"><b>11.0 дн.</b><span>Среднее время устранения</span></div></section>
+<h2>Активные уязвимости</h2>
+<div class="table-wrap"><table><thead><tr><th>ID</th><th>Критичность</th><th>CVSS</th><th>Уязвимость</th><th>Где</th><th>Статус</th><th>Ответственный</th><th>Срок</th></tr></thead><tbody><tr><td class="num"><a href="#f-2">#2</a></td><td><span class="sev sev-high">Высокая</span></td><td class="num">—</td><td>Cross Site Scripting (Reflected)</td><td><code>https://shop.example.test/search</code></td><td>Открыта</td><td>team-search</td><td class="num overdue">2026-10-31 (просрочено на 4 дн.)</td></tr><tr><td class="num"><a href="#f-9">#9</a></td><td><span class="sev sev-high">Высокая</span></td><td class="num">7.5</td><td>Apache 2.4.49 - Path Traversal</td><td><code>https://shop.example.test/cgi-bin/.%2e/.%2e/.%2e/.%2e/etc/passwd</code></td><td>Открыта</td><td>—</td><td class="num overdue">2026-10-31 (просрочено на 4 дн.)</td></tr><tr><td class="num"><a href="#f-11">#11</a></td><td><span class="sev sev-high">Высокая</span></td><td class="num">—</td><td>SQL query built with string formatting</td><td><code>app/db.py:27</code></td><td>Открыта</td><td>—</td><td class="num overdue">2026-10-31 (просрочено на 4 дн.)</td></tr><tr><td class="num"><a href="#f-13">#13</a></td><td><span class="sev sev-high">Высокая</span></td><td class="num">—</td><td>Hard-coded API key in source code</td><td><code>app/config.py:12</code></td><td>Открыта</td><td>—</td><td class="num overdue">2026-10-31 (просрочено на 4 дн.)</td></tr><tr><td class="num"><a href="#f-3">#3</a></td><td><span class="sev sev-medium">Средняя</span></td><td class="num">—</td><td>Content Security Policy (CSP) Header Not Set</td><td><code>https://shop.example.test/</code></td><td>Открыта</td><td>—</td><td class="num">2026-12-30 (осталось 56 дн.)</td></tr><tr><td class="num"><a href="#f-4">#4</a></td><td><span class="sev sev-medium">Средняя</span></td><td class="num">—</td><td>Content Security Policy (CSP) Header Not Set</td><td><code>https://shop.example.test/search</code></td><td>Открыта</td><td>—</td><td class="num">2026-12-30 (осталось 56 дн.)</td></tr><tr><td class="num"><a href="#f-5">#5</a></td><td><span class="sev sev-medium">Средняя</span></td><td class="num">—</td><td>Absence of Anti-CSRF Tokens</td><td><code>https://shop.example.test/profile/{id}/edit</code></td><td>Открыта</td><td>—</td><td class="num">2026-12-30 (осталось 56 дн.)</td></tr><tr><td class="num"><a href="#f-8">#8</a></td><td><span class="sev sev-medium">Средняя</span></td><td class="num">—</td><td>Git Configuration - Detect</td><td><code>https://shop.example.test/.git/config</code></td><td>Открыта</td><td>—</td><td class="num">2026-12-30 (осталось 56 дн.)</td></tr><tr><td class="num"><a href="#f-12">#12</a></td><td><span class="sev sev-medium">Средняя</span></td><td class="num">—</td><td>Flask application runs with debug=True</td><td><code>app/main.py:58</code></td><td>Открыта</td><td>—</td><td class="num">2026-12-30 (осталось 56 дн.)</td></tr></tbody></table></div>
+<h2>Детали и рекомендации</h2>
+<article class="finding" id="f-2">
+<h3>#2 Cross Site Scripting (Reflected)</h3>
+<p class="meta"><span class="sev sev-high">Высокая</span> CVSS не оценён · Открыта · demo-shop</p>
+<dl><dt>Где</dt><dd><code>https://shop.example.test/search</code></dd><dt>Параметры</dt><dd>q</dd><dt>Классификация</dt><dd><a href="https://cwe.mitre.org/data/definitions/79.html" rel="noopener noreferrer">CWE-79</a></dd><dt>Сканеры</dt><dd>zap</dd><dt>Ответственный</dt><dd>team-search</dd><dt>Срок по SLA</dt><dd><span class="overdue">2026-10-31 (просрочено на 4 дн.)</span></dd><dt>Впервые / последний раз</dt><dd>2026-10-01 / 2026-10-12</dd></dl>
+<h4>Описание</h4><p>The search term is reflected into the HTML response without encoding, so a crafted link runs attacker JavaScript in the victim&#x27;s browser.</p>
+<h4>Как воспроизвести</h4><pre>GET https://shop.example.test/search?q=test
+Параметр: q
+Атака: &lt;script&gt;alert(1);&lt;/script&gt;
+Признак в ответе: &lt;script&gt;alert(1);&lt;/script&gt;</pre>
+<h4>Как исправить</h4><p>Encode output for the HTML context (use the template engine&#x27;s auto-escaping), validate input, and add a Content-Security-Policy that forbids inline scripts.</p>
+<h4>Ссылки</h4><ul><li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html" rel="noopener noreferrer">https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html</a></li><li><a href="https://cwe.mitre.org/data/definitions/79.html" rel="noopener noreferrer">https://cwe.mitre.org/data/definitions/79.html</a></li></ul>
+<h4>История</h4><ul><li>2026-10-01 · Обнаружена: обнаружена сканером zap</li><li>2026-10-02 · Ответственный: team-search</li></ul></article>
+<article class="finding" id="f-9">
+<h3>#9 Apache 2.4.49 - Path Traversal</h3>
+<p class="meta"><span class="sev sev-high">Высокая</span> CVSS 7.5 · Открыта · demo-shop</p>
+<dl><dt>Где</dt><dd><code>https://shop.example.test/cgi-bin/.%2e/.%2e/.%2e/.%2e/etc/passwd</code></dd><dt>Классификация</dt><dd><a href="https://nvd.nist.gov/vuln/detail/CVE-2021-41773" rel="noopener noreferrer">CVE-2021-41773</a>, <a href="https://cwe.mitre.org/data/definitions/22.html" rel="noopener noreferrer">CWE-22</a></dd><dt>CVSS-вектор</dt><dd><code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N</code></dd><dt>Сканеры</dt><dd>nuclei</dd><dt>Ответственный</dt><dd>не назначен</dd><dt>Срок по SLA</dt><dd><span class="overdue">2026-10-31 (просрочено на 4 дн.)</span></dd><dt>Впервые / последний раз</dt><dd>2026-10-01 / 2026-10-01</dd></dl>
+<h4>Описание</h4><p>A path normalization flaw in Apache HTTP Server 2.4.49 lets an attacker read files outside the document root.</p>
+<h4>Как воспроизвести</h4><pre>Шаблон CVE-2021-41773 сработал на https://shop.example.test/cgi-bin/.%2e/.%2e/.%2e/.%2e/etc/passwd
+Извлечено: root:x:0:0:root:/root:/bin/bash
+Воспроизведение: curl -X &#x27;GET&#x27; --path-as-is &#x27;https://shop.example.test/cgi-bin/.%2e/.%2e/.%2e/.%2e/etc/passwd&#x27;</pre>
+<h4>Как исправить</h4><p>Upgrade Apache HTTP Server to 2.4.51 or later.</p>
+<h4>Ссылки</h4><ul><li><a href="https://nvd.nist.gov/vuln/detail/CVE-2021-41773" rel="noopener noreferrer">https://nvd.nist.gov/vuln/detail/CVE-2021-41773</a></li><li><a href="https://httpd.apache.org/security/vulnerabilities_24.html" rel="noopener noreferrer">https://httpd.apache.org/security/vulnerabilities_24.html</a></li></ul>
+<h4>История</h4><ul><li>2026-10-01 · Обнаружена: обнаружена сканером nuclei</li></ul></article>
+<article class="finding" id="f-11">
+<h3>#11 SQL query built with string formatting</h3>
+<p class="meta"><span class="sev sev-high">Высокая</span> CVSS не оценён · Открыта · demo-shop</p>
+<dl><dt>Где</dt><dd><code>app/db.py:27</code></dd><dt>Классификация</dt><dd><a href="https://cwe.mitre.org/data/definitions/89.html" rel="noopener noreferrer">CWE-89</a></dd><dt>Сканеры</dt><dd>semgrep-oss</dd><dt>Ответственный</dt><dd>не назначен</dd><dt>Срок по SLA</dt><dd><span class="overdue">2026-10-31 (просрочено на 4 дн.)</span></dd><dt>Впервые / последний раз</dt><dd>2026-10-01 / 2026-10-01</dd></dl>
+<h4>Описание</h4><p>SQL statement is built with an f-string from request data, which allows SQL injection.</p>
+<h4>Как воспроизвести</h4><pre>app/db.py:27
+cursor.execute(f&quot;SELECT * FROM products WHERE id = {product_id}&quot;)</pre>
+<h4>Как исправить</h4><p>Pass values as query parameters: cursor.execute(&quot;SELECT * FROM products WHERE id = %s&quot;, (product_id,)).</p>
+<h4>Ссылки</h4><ul><li><a href="https://semgrep.dev/r/python.lang.security.audit.formatted-sql-query.formatted-sql-query" rel="noopener noreferrer">https://semgrep.dev/r/python.lang.security.audit.formatted-sql-query.formatted-sql-query</a></li></ul>
+<h4>История</h4><ul><li>2026-10-01 · Обнаружена: обнаружена сканером semgrep-oss</li></ul></article>
+<article class="finding" id="f-13">
+<h3>#13 Hard-coded API key in source code</h3>
+<p class="meta"><span class="sev sev-high">Высокая</span> CVSS не оценён · Открыта · demo-shop</p>
+<dl><dt>Где</dt><dd><code>app/config.py:12</code></dd><dt>Классификация</dt><dd><a href="https://cwe.mitre.org/data/definitions/798.html" rel="noopener noreferrer">CWE-798</a></dd><dt>Сканеры</dt><dd>semgrep-oss</dd><dt>Ответственный</dt><dd>не назначен</dd><dt>Срок по SLA</dt><dd><span class="overdue">2026-10-31 (просрочено на 4 дн.)</span></dd><dt>Впервые / последний раз</dt><dd>2026-10-01 / 2026-10-01</dd></dl>
+<h4>Описание</h4><p>A payment provider API key is hard-coded in the configuration module.</p>
+<h4>Как воспроизвести</h4><pre>app/config.py:12
+PAYMENT_API_KEY = &quot;sk_demo_************************&quot;</pre>
+<h4>Как исправить</h4><p>Move the key to a secrets vault or environment variable and rotate the leaked key.</p>
+<h4>Ссылки</h4><ul><li><a href="https://semgrep.dev/r/generic.secrets.gitleaks.generic-api-key.generic-api-key" rel="noopener noreferrer">https://semgrep.dev/r/generic.secrets.gitleaks.generic-api-key.generic-api-key</a></li></ul>
+<h4>История</h4><ul><li>2026-10-01 · Обнаружена: обнаружена сканером semgrep-oss</li></ul></article>
+<article class="finding" id="f-3">
+<h3>#3 Content Security Policy (CSP) Header Not Set</h3>
+<p class="meta"><span class="sev sev-medium">Средняя</span> CVSS не оценён · Открыта · demo-shop</p>
+<dl><dt>Где</dt><dd><code>https://shop.example.test/</code></dd><dt>Классификация</dt><dd><a href="https://cwe.mitre.org/data/definitions/693.html" rel="noopener noreferrer">CWE-693</a></dd><dt>Сканеры</dt><dd>zap</dd><dt>Ответственный</dt><dd>не назначен</dd><dt>Срок по SLA</dt><dd>2026-12-30 (осталось 56 дн.)</dd><dt>Впервые / последний раз</dt><dd>2026-10-01 / 2026-10-12</dd></dl>
+<h4>Описание</h4><p>The response has no Content-Security-Policy header, which would limit the impact of XSS and data injection.</p>
+<h4>Как воспроизвести</h4><pre>GET https://shop.example.test/</pre>
+<h4>Как исправить</h4><p>Configure the web server or application to return a Content-Security-Policy header.</p>
+<h4>Ссылки</h4><ul><li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP" rel="noopener noreferrer">https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP</a></li></ul>
+<h4>История</h4><ul><li>2026-10-01 · Обнаружена: обнаружена сканером zap</li></ul></article>
+<article class="finding" id="f-4">
+<h3>#4 Content Security Policy (CSP) Header Not Set</h3>
+<p class="meta"><span class="sev sev-medium">Средняя</span> CVSS не оценён · Открыта · demo-shop</p>
+<dl><dt>Где</dt><dd><code>https://shop.example.test/search</code></dd><dt>Классификация</dt><dd><a href="https://cwe.mitre.org/data/definitions/693.html" rel="noopener noreferrer">CWE-693</a></dd><dt>Сканеры</dt><dd>zap</dd><dt>Ответственный</dt><dd>не назначен</dd><dt>Срок по SLA</dt><dd>2026-12-30 (осталось 56 дн.)</dd><dt>Впервые / последний раз</dt><dd>2026-10-01 / 2026-10-12</dd></dl>
+<h4>Описание</h4><p>The response has no Content-Security-Policy header, which would limit the impact of XSS and data injection.</p>
+<h4>Как воспроизвести</h4><pre>GET https://shop.example.test/search?q=test</pre>
+<h4>Как исправить</h4><p>Configure the web server or application to return a Content-Security-Policy header.</p>
+<h4>Ссылки</h4><ul><li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP" rel="noopener noreferrer">https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP</a></li></ul>
+<h4>История</h4><ul><li>2026-10-01 · Обнаружена: обнаружена сканером zap</li></ul></article>
+<article class="finding" id="f-5">
+<h3>#5 Absence of Anti-CSRF Tokens</h3>
+<p class="meta"><span class="sev sev-medium">Средняя</span> CVSS не оценён · Открыта · demo-shop</p>
+<dl><dt>Где</dt><dd><code>https://shop.example.test/profile/{id}/edit</code></dd><dt>Классификация</dt><dd><a href="https://cwe.mitre.org/data/definitions/352.html" rel="noopener noreferrer">CWE-352</a></dd><dt>Сканеры</dt><dd>zap</dd><dt>Ответственный</dt><dd>не назначен</dd><dt>Срок по SLA</dt><dd>2026-12-30 (осталось 56 дн.)</dd><dt>Впервые / последний раз</dt><dd>2026-10-01 / 2026-10-12</dd></dl>
+<h4>Описание</h4><p>The profile edit form has no anti-CSRF token, so another site can submit it on behalf of a logged-in user.</p>
+<h4>Как воспроизвести</h4><pre>GET https://shop.example.test/profile/1024/edit
+Признак в ответе: &lt;form action=&quot;/profile/1024/edit&quot; method=&quot;post&quot;&gt;</pre>
+<h4>Как исправить</h4><p>Add a per-session anti-CSRF token to state-changing forms and set SameSite on the session cookie.</p>
+<h4>Ссылки</h4><ul><li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html" rel="noopener noreferrer">https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html</a></li></ul>
+<h4>История</h4><ul><li>2026-10-01 · Обнаружена: обнаружена сканером zap</li></ul></article>
+<article class="finding" id="f-8">
+<h3>#8 Git Configuration - Detect</h3>
+<p class="meta"><span class="sev sev-medium">Средняя</span> CVSS не оценён · Открыта · demo-shop</p>
+<dl><dt>Где</dt><dd><code>https://shop.example.test/.git/config</code></dd><dt>Классификация</dt><dd><a href="https://cwe.mitre.org/data/definitions/200.html" rel="noopener noreferrer">CWE-200</a></dd><dt>Сканеры</dt><dd>nuclei</dd><dt>Ответственный</dt><dd>не назначен</dd><dt>Срок по SLA</dt><dd>2026-12-30 (осталось 56 дн.)</dd><dt>Впервые / последний раз</dt><dd>2026-10-01 / 2026-10-01</dd></dl>
+<h4>Описание</h4><p>The .git/config file is publicly reachable and may disclose repository URLs and embedded credentials.</p>
+<h4>Как воспроизвести</h4><pre>Шаблон git-config сработал на https://shop.example.test/.git/config
+Извлечено: [remote &quot;origin&quot;]
+Воспроизведение: curl -X &#x27;GET&#x27; &#x27;https://shop.example.test/.git/config&#x27;</pre>
+<h4>Как исправить</h4><p>Deny access to /.git on the web server and keep the directory out of the deployment artifact.</p>
+<h4>Ссылки</h4><ul><li><a href="https://git-scm.com/docs/git-config" rel="noopener noreferrer">https://git-scm.com/docs/git-config</a></li></ul>
+<h4>История</h4><ul><li>2026-10-01 · Обнаружена: обнаружена сканером nuclei</li></ul></article>
+<article class="finding" id="f-12">
+<h3>#12 Flask application runs with debug=True</h3>
+<p class="meta"><span class="sev sev-medium">Средняя</span> CVSS не оценён · Открыта · demo-shop</p>
+<dl><dt>Где</dt><dd><code>app/main.py:58</code></dd><dt>Классификация</dt><dd><a href="https://cwe.mitre.org/data/definitions/489.html" rel="noopener noreferrer">CWE-489</a></dd><dt>Сканеры</dt><dd>semgrep-oss</dd><dt>Ответственный</dt><dd>не назначен</dd><dt>Срок по SLA</dt><dd>2026-12-30 (осталось 56 дн.)</dd><dt>Впервые / последний раз</dt><dd>2026-10-01 / 2026-10-01</dd></dl>
+<h4>Описание</h4><p>Flask app is started with debug=True.</p>
+<h4>Как воспроизвести</h4><pre>app/main.py:58
+app.run(host=&quot;0.0.0.0&quot;, debug=True)</pre>
+<h4>Как исправить</h4><p>Read the debug flag from configuration and keep it off outside local development.</p>
+<h4>Ссылки</h4><ul><li><a href="https://semgrep.dev/r/python.flask.security.audit.debug-enabled.debug-enabled" rel="noopener noreferrer">https://semgrep.dev/r/python.flask.security.audit.debug-enabled.debug-enabled</a></li></ul>
+<h4>История</h4><ul><li>2026-10-01 · Обнаружена: обнаружена сканером semgrep-oss</li></ul></article>
+<h2>Закрытые</h2>
+<div class="table-wrap"><table><thead><tr><th>ID</th><th>Критичность</th><th>Уязвимость</th><th>Где</th><th>Статус</th><th>Закрыта</th></tr></thead><tbody><tr><td class="num">#1</td><td><span class="sev sev-critical">Критическая</span></td><td>SQL Injection</td><td><code>https://shop.example.test/api/products</code></td><td>Устранена</td><td class="num">2026-10-12</td></tr><tr><td class="num">#6</td><td><span class="sev sev-low">Низкая</span></td><td>Cookie without SameSite Attribute</td><td><code>https://shop.example.test/login</code></td><td>Устранена</td><td class="num">2026-10-12</td></tr><tr><td class="num">#7</td><td><span class="sev sev-low">Низкая</span></td><td>Server Leaks Version Information via &quot;Server&quot; HTTP Response Header Field</td><td><code>https://shop.example.test/</code></td><td>Ложное срабатывание</td><td class="num">2026-10-02</td></tr></tbody></table></div>
+</body></html>

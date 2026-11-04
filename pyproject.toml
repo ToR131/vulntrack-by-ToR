@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vulntrack"
+version = "0.1.0"
+description = "Агрегация и учёт уязвимостей из отчётов OWASP ZAP, Nuclei и SARIF: дедупликация, CVSS v3.1, SLA, отчёты"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
+keywords = ["security", "vulnerability-management", "owasp-zap", "nuclei", "sarif", "cvss"]
+
+[project.scripts]
+vulntrack = "vulntrack.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["vulntrack*"]
