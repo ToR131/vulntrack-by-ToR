@@ -1,0 +1,9 @@
+__pycache__/
+*.egg-info/
+build/
+dist/
+.venv/
+vulntrack.db
+report.html
+report.md
+findings.csv
